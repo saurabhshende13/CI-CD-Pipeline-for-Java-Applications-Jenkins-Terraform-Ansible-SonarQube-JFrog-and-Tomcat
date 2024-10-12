@@ -3,9 +3,9 @@ resource "aws_vpc" "myvpc" {
 }
 
 resource "aws_subnet" "mysubnet" {
-  vpc_id = aws_vpc.myvpc.id
-  cidr_block = var.subnet_cidr_block
-  availability_zone = var.availability_zone
+  vpc_id                  = aws_vpc.myvpc.id
+  cidr_block              = var.subnet_cidr_block
+  availability_zone       = var.availability_zone
   map_public_ip_on_launch = "true"
 }
 
