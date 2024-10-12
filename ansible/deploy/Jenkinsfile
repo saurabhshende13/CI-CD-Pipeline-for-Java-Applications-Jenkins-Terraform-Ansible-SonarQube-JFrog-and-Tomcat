@@ -1,0 +1,26 @@
+pipeline{
+	agent any
+
+	parameters {
+		string(name: 'inventory', defaultValue: 'dev,ini',  description: 'This is the inventory file for the environment to deploy configuration')
+	}
+	environment{
+		ANSIBLE_CONFIG="${WORKSPACE}/deploy/.ansible.cfg"
+	}	
+	
+	stages{
+		stage('Clean Up'){
+			steps{
+				cleanWs()
+			}
+
+	    }
+		
+	    stage('Execute Ansible'){
+		    steps{
+			    ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', disableHostKeyChecking: true, inventory: 'inventory/${inventory}', playbook: 'playbook/site.yml', vaultTmpPath: ''
+		    }
+
+	    }
+    }
+}

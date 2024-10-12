@@ -1,0 +1,31 @@
+---
+- name: Update apt package manager cache
+  apt:
+    update_cache: yes
+
+- name: Install Tomcat 9
+  apt:
+    name: tomcat9
+    state: present
+
+- name: Install Tomcat Admin package
+  apt:
+    name: tomcat9-admin
+    state: present
+
+- name: Install Tomcat docs package
+  apt:
+    name: tomcat9-docs
+    state: present
+
+- name: Install Tomcat common package
+  apt:
+    name: tomcat9-common
+    state: present
+
+- name: Ensure Tomcat is started and enabled
+  service:
+    name: tomcat9
+    state: started
+    enabled: yes
+

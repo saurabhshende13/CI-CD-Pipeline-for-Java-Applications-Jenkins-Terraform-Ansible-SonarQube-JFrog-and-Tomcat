@@ -1,0 +1,19 @@
+#---
+- name: Deploy Tomcat
+  hosts: tomcat_server
+  become: yes
+  roles:
+    - tomcat
+
+- name: Deploy SonarQube
+  hosts: sonarqube_server
+  become: yes
+  roles:
+     - sonarqube
+
+- name: Deploy Artifactory
+  hosts: artifactory_server
+  become: yes
+  roles:
+    - artifactory
+

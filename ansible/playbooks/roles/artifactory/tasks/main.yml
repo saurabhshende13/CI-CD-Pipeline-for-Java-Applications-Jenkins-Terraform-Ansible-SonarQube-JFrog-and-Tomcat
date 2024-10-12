@@ -1,0 +1,28 @@
+---
+# Main tasks for installing JFrog Artifactory Pro
+
+- name: Update apt package list
+  apt:
+    update_cache: yes
+
+- name: Install required packages (wget, net-tools)
+  apt:
+    name:
+      - wget
+      - net-tools
+    state: present
+
+- name: Download JFrog Artifactory Pro deb package
+  get_url:
+    url: https://releases.jfrog.io/artifactory/artifactory-pro-debs/pool/jfrog-artifactory-pro/jfrog-artifactory-pro-7.49.5.deb
+    dest: /tmp/jfrog-artifactory-pro-7.49.5.deb
+
+- name: Install JFrog Artifactory Pro package
+  apt:
+    deb: /tmp/jfrog-artifactory-pro-7.49.5.deb
+
+- name: Start JFrog Artifactory service
+  systemd:
+    name: artifactory.service
+    state: started
+    enabled: yes
