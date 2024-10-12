@@ -1,26 +1,34 @@
-pipeline{
-	agent any
+pipeline {
+    agent any
 
-	parameters {
-		string(name: 'inventory', defaultValue: 'dev.ini',  description: 'This is the inventory file for the environment to deploy configuration')
-	}
-	environment{
-		ANSIBLE_CONFIG="${WORKSPACE}/deploy/.ansible.cfg"
-	}	
-	
-	stages{
-		stage('Clean Up'){
-			steps{
-				cleanWs()
-			}
+    environment {
+        ANSIBLE_CONFIG = "${WORKSPACE}/deploy/.ansible.cfg"
+    }
 
-	    }
-		
-	    stage('Execute Ansible'){
-		    steps{
-			    ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', disableHostKeyChecking: true, inventory: 'inventory/${inventory}', playbook: 'playbook/site.yml', vaultTmpPath: ''
-		    }
+    stages {
+        stage('Clean Up') {
+            steps {
+                cleanWs()
+            }
+        }
 
-	    }
+        stage('Pull Code') {
+            steps {
+                // Correctly pulling the code from GitHub
+                git branch: 'main', credentialsId: 'git', url: 'https://github.com/saurabhshende13/CI-CD-Pipeline-for-Java-Applications-Jenkins-Terraform-Ansible-SonarQube-JFrog-and-Tomcat.git'
+            }
+        }
+
+        stage('Execute Ansible') {
+            steps {
+                ansiblePlaybook(
+                    credentialsId: 'ansible',
+                    installation: 'ansible',
+                    disableHostKeyChecking: true,
+                    inventory: 'inventory/dev.ini',
+                    playbook: 'playbook/site.yml'
+                )
+            }
+        }
     }
 }
