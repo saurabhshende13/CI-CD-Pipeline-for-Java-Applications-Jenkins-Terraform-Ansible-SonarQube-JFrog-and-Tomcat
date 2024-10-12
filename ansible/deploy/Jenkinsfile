@@ -12,12 +12,12 @@ pipeline {
             }
         }
 
-        stage('Pull Code') {
-            steps {
-                // Correctly pulling the code from GitHub
-                git branch: 'main', credentialsId: 'git', url: 'https://github.com/saurabhshende13/CI-CD-Pipeline-for-Java-Applications-Jenkins-Terraform-Ansible-SonarQube-JFrog-and-Tomcat.git'
-            }
-        }
+        // stage('Pull Code') {
+        //     steps {
+        //         // Correctly pulling the code from GitHub
+        //         git branch: 'main', credentialsId: 'git', url: 'https://github.com/saurabhshende13/CI-CD-Pipeline-for-Java-Applications-Jenkins-Terraform-Ansible-SonarQube-JFrog-and-Tomcat.git'
+        //     }
+        // }
 
         stage('Execute Ansible') {
             steps {
@@ -26,7 +26,7 @@ pipeline {
                     installation: 'ansible',
                     disableHostKeyChecking: true,
                     inventory: 'inventory/dev.ini',
-                    playbook: 'playbook/site.yml'
+                    playbook: 'playbooks/site.yml'
                 )
             }
         }
