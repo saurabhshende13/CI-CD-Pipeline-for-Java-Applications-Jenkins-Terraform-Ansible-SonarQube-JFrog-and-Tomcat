@@ -19,7 +19,7 @@ pipeline {
         //     }
         // }
         
-        stage('Clean Up') {
+        stage('Debug workspace') {
             steps {
                 script {
 					sh 'ls -R'
